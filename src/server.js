@@ -8,7 +8,11 @@ const Calculate = require('./controller.js')
 app.post('/calculate-age', urlencodedParser, function (req, res) {
   let birthday = req.body.birthday
   const age = Calculate.calculate(birthday)
-  res.json({ age })
+  if (age) {
+    res.json({ age })
+  } else {
+    res.status(400).json({ message: 'Invalid birthday' })
+  }
 })
 
 let argv = process.argv
@@ -23,4 +27,4 @@ for (i = 0; i < argv.length; i++) {
   }
 }
 
-app.listen(3000, function (req, res) {})
+app.listen(3000)
