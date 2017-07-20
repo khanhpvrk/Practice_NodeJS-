@@ -4,18 +4,23 @@ const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const Calculate = require('./controller.js')
 
-app.listen(3000, function (req, res) {
-  Calculate.calculate()
-})
-
 // calculate
 app.post('/calculate-age', urlencodedParser, function (req, res) {
   let birthday = req.body.birthday
-  let newDate = new Date(birthday).getFullYear()
-  if (!Date.parse(newDate)) {
-    res.send('fail')
-  }
-  let dateNow = new Date().getFullYear().toString()
-  let age = dateNow - newDate
+  const age = Calculate.calculate(birthday)
   res.json({ age })
 })
+
+let argv = process.argv
+let i = 0
+for (i = 0; i < argv.length; i++) {
+  const currentElement = argv[i]
+  let findBirthday = currentElement.includes('--birthday=')
+  if (findBirthday) {
+    let birthday = currentElement.replace('--birthday=', '')
+    let age = Calculate.calculate(birthday)
+    console.log(`"age:" ${age}`)
+  }
+}
+
+app.listen(3000, function (req, res) {})
