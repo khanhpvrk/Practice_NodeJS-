@@ -10,8 +10,9 @@ app.listen(3000, function (req, res) {
 
 // calculate
 app.post('/calculate-age', urlencodedParser, function (req, res) {
-  let b = req.body.birthday
-  let date = new Date().getFullYear().toString()
-  let age = date - b
-  res.json(` "age:" ${age}`)
+  let birthday = req.body.birthday
+  let newDate = new Date(birthday).getFullYear()
+  let dateNow = new Date().getFullYear().toString()
+  let age = dateNow - newDate
+  res.json({ age })
 })

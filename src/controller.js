@@ -1,5 +1,4 @@
 module.exports = {
-
   calculate: function () {
     let argv = process.argv
     let i = 0
